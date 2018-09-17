@@ -36,7 +36,3 @@ Copy the whole script, paste it in the browser developers console, hit enter, li
 ## Issues
 
 + When minBet is set in the textbox it's shows as E-notation (xe-x). Isn't critical, just weird to watch.
-
-## Support
-
-If you find this script useful, you can register with [this link](https://freebitco.in/?r=1837499), or if you already have an account, you can send it to a friend.
