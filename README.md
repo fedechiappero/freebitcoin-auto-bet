@@ -4,7 +4,7 @@
 
 This script doesn't guarantee you that you go to win every bet, it just play automatically like you would do it but you don't have to do anything beside to start the script, the game mode is a sort of [martingale](https://en.wikipedia.org/wiki/Martingale_(probability_theory)). Keep reading if you're interested.
 
-## What it does?
+### What it does?
 
 When the script is started, it bet the minBet. 
 
@@ -16,9 +16,9 @@ Ends when:
 + Before bet the maxBet.
 + It overcome the profit.
 
-# How do i use it?
+## How do i use it?
 
-## Params (config var)
+### Params (config var)
 
 These are values you may tweak as you prefer.
 
@@ -28,7 +28,7 @@ These are values you may tweak as you prefer.
 + delay: this combined with other values is the delay between bets.
 + payout: payout multiplier.
 
-## Run it
+### Run it
 
 Copy the whole script, paste it in the browser developers console, hit enter, lie back and relax.
 (uncomment the 'console.log(...)' to see verbose mode)
@@ -37,6 +37,6 @@ Copy the whole script, paste it in the browser developers console, hit enter, li
 
 + When minBet is set in the textbox it's shows as E-notation (xe-x). Isn't critical, just weird to watch.
 
-# Support
+## Support
 
 If you find this script useful, you can register with [this link](https://freebitco.in/?r=1837499), or if you already have an account, you can send it to a friend.
