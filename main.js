@@ -1,7 +1,7 @@
 var config = { 
-    maxBet: 0.00001024,
-    minBet: 0.00000008,
-    profit: 0.00000100,
+    maxBet: 0.00000128, //before bet this amount, the script will stop
+    minBet: 0.00000002,
+    profit: 0.00000010,
     delay: 500,
     payout: 2.00,
 }; 
@@ -10,7 +10,7 @@ var betButton = 'hi';
 var multiplier = 1;
 var cant = 0;
 var initialBalance = 0;
-var iWin = 0;
+var iWon = 0;
 var iLose = 0;
 var end = 0;
 
@@ -19,31 +19,33 @@ var loButton = document.getElementById("double_your_btc_bet_lo_button");
 var winMessage = $('#double_your_btc_bet_win');
 var loseMessage = $('#double_your_btc_bet_lose');
 
+var stake = $('#double_your_btc_stake');
+
 //change the bet button
-var switchButton = function(valor) { 
-    return valor === 'hi' ? 'lo' : 'hi';
+var switchButton = function(val) { 
+    return val === 'hi' ? 'lo' : 'hi';
 }; 
 
 //check if the bet buttons are enabled
-var buttonsEnabled = function(){
+var buttonsEnabled = function() {
     return (hiButton.getAttribute('disable') !== 'disabled') && 
     (loButton.getAttribute('disabled') !== 'disabled');
 };
 
 //operations after win
-var afterWin = function (){
-    console.log("Win! " + (winMessage.html()).substring(22,36));
-    $('#double_your_btc_min').click(); 
+var afterWin = function () {
+    //console.log("Won! " + (winMessage.html()).substring(22,36));
+    stake.val(String(config.minBet)); 
     multiplier = 1; 
-    iWin++; 
+    iWon++; 
     cant = 0; 
     betButton = 'hi';    
 };
 
 //operations after lose
-var afterLose = function (){
-    console.log("Lose, raising the bet"); 
+var afterLose = function () {
     $('#double_your_btc_2x').click(); 
+    //console.log("Lose, raising the bet: "+stake.val()); 
     iLose++;  
     multiplier++;  
     if(cant == config.payout) {  
@@ -53,47 +55,56 @@ var afterLose = function (){
 };
 
 //show results
-var showBalance = function (){
+var showBalance = function () {
     console.log("Statistics:"); 
     console.log("Initial balance: " + initialBalance);
-    console.log("Profit/Loss: " + String(Math.round((parseFloat($('#balance').html()) - initialBalance) * 100000000)) + " Satoshis");
+    console.log("Profit: " + String(Math.round((parseFloat($('#balance').html()) - initialBalance) * 100000000)) + " Satoshis");
     console.log("Final balance: " + String($('#balance').html()));     
-    console.log("Bets won: " + String(iWin));
+    console.log("Bets won: " + String(iWon));
     console.log("Bets lost: " + String(iLose));
-    console.log("Total bets: " + String(iWin + iLose));
+    console.log("Total bets: " + String(iWon + iLose));
 };
 
-var makeBet = function(){
+var makeBet = function() {
     $('#double_your_btc_bet_' + betButton + '_button').click(); 
-    console.log("I made a bet pressing " + betButton);
+    //console.log("I made a bet pressing " + betButton);
     cant++;
 };
 
 //main function
 var start = function() { 
     if (buttonsEnabled()) {
+                
         if (winMessage.html() !== '') { 
             afterWin();                            
         } else if (loseMessage.html() !== '') {  
-             afterLose();
+            afterLose();
         } 
-        if (parseFloat($('#balance').html()) > end) { 
+
+        //end = (profit + initialBalance)
+        if (parseFloat($('#balance').html()) > end || stake.val() >= config.maxBet) {
             showBalance();
             return;
-        } 
-        makeBet();
+        }
+
+        setTimeout(function() {
+            makeBet();
+        }, config.delay);
+    
     } else {
-        console.log("Standby calculation"); 
+        //console.log("Standby calculation"); 
     } 
     setTimeout(function() {
         start()
-    }, (multiplier * config.delay) + Math.round(Math.random() * 10000));
+    }, (multiplier * config.delay) + Math.round(Math.random() * 2000));
 }; 
 
+//useful when re-execute the script without reload the webpage
+$('#double_your_btc_bet_lose').html("");
+$('#double_your_btc_bet_win').html("");
+
 initialBalance = parseFloat($('#balance').html());
-//config.profit = config.apuestaMaxima / 2;/*yo configuro que la ganancia esperada es la mitad de la apuesta maxima, me parece que es una buena forma de asegurarme de obtener ganancias*/
 end = config.profit + initialBalance;
 $('#double_your_btc_payout_multiplier').val(String(config.payout));
-//$('#double_your_btc_min').click();/*se presiona el boton de apuesta minima, pero si todavia no aposte nada.. ya se, sirve solo en el caso que haya terminado el script y lo ejecuten sin regargar la pagina*/
-$('#double_your_btc_stake').val(String(config.minBet));
-start()
+stake.val(String(config.minBet));
+start();
