@@ -7,11 +7,11 @@ This script doesn't guarantee you that you go to win every bet, it just play aut
 ## What it does?
 
 When the script is started, it bet the minBet. 
-- When lose, it duplicate the bet.
-- When won, it reset the bet back to minBet and start again.
++ When lose, it duplicate the bet.
++ When won, it reset the bet back to minBet and start again.
 Ends when:
-- Before bet the maxBet.
-- It overcome the profit.
++ Before bet the maxBet.
++ It overcome the profit.
 
 # How do i use it?
 
