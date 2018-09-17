@@ -36,3 +36,4 @@ Copy the whole script, paste it in the browser developers console, hit enter, li
 ## Issues
 
 + When minBet is set in the textbox it's shows as E-notation (xe-x). Isn't critical, just weird to watch.
++ Sometimes in the statistics, the initial balance doesn't show up entirely. Isn't critical either.
